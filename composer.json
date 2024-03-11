@@ -1,0 +1,20 @@
+{
+    "name": "root/app",
+    "type": "project",
+    "require": {
+        "guzzlehttp/guzzle": "^7.8",
+        "nesbot/carbon": "^3.0"
+    },
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "App\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Konstantin"
+        }
+    ],
+    "minimum-stability": "stable"
+}
