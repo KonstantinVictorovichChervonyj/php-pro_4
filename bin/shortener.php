@@ -19,7 +19,7 @@ $config = [
 //$fileRepository = new FileRepository($config['dbFile']);
 
 
-new DatabaseAR('base', 'doctor', 'pass4doctor');
+new DatabaseAR('base', 'doctor', 'pass4doctor', 'db_mysql');
 $databaseRepository = new DatabaseRepository(new UrlCode());
 
 
@@ -32,7 +32,7 @@ $converter = new UrlConverter(
 );
 
 try {
-    echo $converter->encode('https://facebook.com');
+    echo $converter->encode('https://www.youtube.com');
     echo PHP_EOL;
 } catch (\Exception $e) {
     echo 'Error: ' . $e->getMessage();

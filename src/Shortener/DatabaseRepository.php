@@ -27,7 +27,7 @@ class DatabaseRepository implements ICodeRepository
         $this->urlCode->fill([
             'url' => $urlCodePair->getUrl(),
             'code' => $urlCodePair->getCode()
-        ]);
+        ])->save();
         return true;
     }
 
