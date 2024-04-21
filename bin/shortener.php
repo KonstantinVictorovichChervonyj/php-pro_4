@@ -1,7 +1,10 @@
 <?php
 
+use App\Shortener\DatabaseAR;
+use App\Shortener\DatabaseRepository;
 use App\Shortener\FileRepository;
 use App\Shortener\Helpers\UrlValidator;
+use App\Shortener\Models\UrlCode;
 use App\Shortener\UrlConverter;
 use GuzzleHttp\Client;
 
@@ -13,11 +16,17 @@ $config = [
     'urlConverter.codeLength' => 8
 ];
 
-$fileRepository = new FileRepository($config['dbFile']);
+//$fileRepository = new FileRepository($config['dbFile']);
+
+
+new DatabaseAR('base', 'doctor', 'pass4doctor');
+$databaseRepository = new DatabaseRepository(new UrlCode());
+
+
 $urlValidator = new UrlValidator(new Client());
 
 $converter = new UrlConverter(
-    $fileRepository,
+    $databaseRepository,
     $urlValidator,
     $config['urlConverter.codeLength']
 );
