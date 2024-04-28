@@ -1,17 +1,29 @@
 <?php
 
+use App\Controllers\ErrorController;
+use App\Controllers\UrlCodeController;
+use App\Core\Exceptions\RouteNotFoundException;
+use App\Shortener\DatabaseRepository;
+use App\Shortener\Models\UrlCode;
 
-$b = 1;
+require_once __DIR__ . '/../vendor/autoload.php';
 
-$a = rand(1,20);
+$uri = $_SERVER['REQUEST_URI'];
+$pathParts = explode('/', substr($uri, 1));
 
-if ($a < 10) {
-    echo 'менше 10';
+try {
+    $controllerClass = match (array_shift($pathParts)) {
+        'error' => ErrorController::class,
+        'shortener' => UrlCodeController::class,
+        default => throw new RouteNotFoundException('Uri: $uri not found'),
+    };
+    $controller = new $controllerClass(new DatabaseRepository(new UrlCode()));
+    echo $controller->getInfo($pathParts[0]);
+} catch (\Exception $e) {
+    $controller = new ErrorController;
+    echo $controller->getError($uri, 404);
+} catch (\Error $e) {
+    echo $e->getMessage();
+    $controller = new ErrorController;
+    echo $controller->getError('', 500);
 }
-
-echo PHP_EOL;
-
-echo 'Hello world';
-
-echo PHP_EOL;
-echo PHP_EOL;
